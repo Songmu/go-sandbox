@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strings"
 	"sync"
+	"sync/atomic"
 )
 
 // Deeeeter implements Deeeet() method
@@ -13,7 +14,7 @@ type Deeeeter interface {
 }
 
 type deeeet struct {
-	age int
+	age int64
 	mu  sync.RWMutex
 }
 
@@ -32,10 +33,8 @@ func GetDeeeter() Deeeeter {
 
 // Deeeet desu...
 func (de *deeeet) Deeeet() {
-	de.mu.RLock()
-	de.age++
-	de.mu.RUnlock()
-	fmt.Printf("d%stです…\n", strings.Repeat("e", de.age))
+	age := int(atomic.AddInt64(&de.age, 1))
+	fmt.Printf("d%stです…\n", strings.Repeat("e", age))
 }
 
 func (de *deeeet) getAge() {
