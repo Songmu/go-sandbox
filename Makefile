@@ -1,5 +1,7 @@
+pv=$(shell gobump show -r ./cmd/songmu)
+
 crossbuild:
-	goxz -pv=v$(shell gobump show -r) -d=./dist/v$(shell gobump show -r) ./cmd/songmu
+	goxz -pv=v$(pv) -d=./dist/v$(pv) ./cmd/songmu
 
 release:
 	_tools/releng

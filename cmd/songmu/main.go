@@ -12,7 +12,7 @@ import (
 	"github.com/rhysd/go-github-selfupdate/selfupdate"
 )
 
-const version = "0.0.1"
+const version = "0.0.2"
 
 const (
 	exitOK = iota
