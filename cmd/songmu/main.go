@@ -8,7 +8,7 @@ import (
 	"github.com/Songmu/ghselfupdate"
 )
 
-const version = "0.0.3"
+const version = "0.1.0"
 
 const (
 	exitOK = iota
