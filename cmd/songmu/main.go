@@ -60,7 +60,6 @@ func run() int {
 			log.Println("Current binary is the latest version", version)
 		} else {
 			log.Println("Successfully updated to version", latest.Version)
-			log.Println("Release note:\n", latest.ReleaseNotes)
 		}
 		return exitOK
 	}
