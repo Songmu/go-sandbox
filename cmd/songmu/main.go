@@ -8,7 +8,7 @@ import (
 	"github.com/Songmu/ghselfupdate"
 )
 
-const version = "0.0.2"
+const version = "0.0.3"
 
 const (
 	exitOK = iota
@@ -38,6 +38,6 @@ func run() int {
 		}
 		return exitOK
 	}
-	log.Println("Hello! songmu")
+	log.Println("Hello! songmu. version:", version)
 	return exitOK
 }
