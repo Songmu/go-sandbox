@@ -4,12 +4,8 @@ import (
 	"flag"
 	"log"
 	"os"
-	"path/filepath"
-	"regexp"
-	"runtime"
 
-	"github.com/blang/semver"
-	"github.com/rhysd/go-github-selfupdate/selfupdate"
+	"github.com/Songmu/ghselfupdate"
 )
 
 const version = "0.0.2"
@@ -19,30 +15,15 @@ const (
 	exitErr
 )
 
-var slugReg = regexp.MustCompile(`/src/github.com/([^/]+/[^/]+)`)
-
 func main() {
 	os.Exit(run())
 }
 
 func run() int {
-	semv, err := semver.Parse(version)
-	if err != nil {
-		log.Println(err)
-		return exitErr
-	}
-	fpath := filepath.ToSlash(origFilePath())
-	matches := slugReg.FindStringSubmatch(fpath)
-	if len(matches) < 2 {
-		log.Println("slug not detected")
-		return exitErr
-	}
-	slug := matches[1]
-
 	fs := flag.NewFlagSet("songmu", flag.ContinueOnError)
 	var selfUpdate = fs.Bool("self-update", false, "self update")
 
-	err = fs.Parse(os.Args[1:])
+	err := fs.Parse(os.Args[1:])
 	if err != nil {
 		if err == flag.ErrHelp {
 			return exitOK
@@ -50,25 +31,13 @@ func run() int {
 		return exitErr
 	}
 	if *selfUpdate {
-		latest, err := selfupdate.UpdateSelf(semv, slug)
+		err := ghselfupdate.Do(version)
 		if err != nil {
 			log.Println("Binary update failed:", err)
 			return exitErr
-		}
-		if latest.Version.Equals(semv) {
-			// latest version is the same as current version. It means current binary is up to date.
-			log.Println("Current binary is the latest version", version)
-		} else {
-			log.Println("Successfully updated to version", latest.Version)
-			log.Println("Release note:\n", latest.ReleaseNotes)
 		}
 		return exitOK
 	}
 	log.Println("Hello! songmu")
 	return exitOK
-}
-
-func origFilePath() string {
-	_, fname, _, _ := runtime.Caller(1)
-	return fname
 }
