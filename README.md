@@ -11,7 +11,7 @@ go-sandbox
 
 ## Description
 
-Generate changelog from git history, tags and merged pull requests
+Go sandbox
 
 ## Author
 
