@@ -1,3 +1,12 @@
+u := $(if $(update),-u)
+
+export GO111MODULE=on
+
+.PHONY: deps
+deps:
+	go get $(u) -d
+	go mod tidy
+
 pv=$(shell gobump show -r ./cmd/songmu)
 
 crossbuild:
