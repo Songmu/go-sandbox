@@ -1,5 +1,7 @@
 github.com/Songmu/ghselfupdate v0.0.0-20181014062948-2aad00061eed h1:VuUQc+EC5kVdetKbBUwbstq0IKKyAe/foQQjKRqjGbM=
 github.com/Songmu/ghselfupdate v0.0.0-20181014062948-2aad00061eed/go.mod h1:frXvlLFNrQKbASAmtk2X8MrPK05mRmS259ouGes8txQ=
+github.com/Songmu/go-sandbox v0.1.0 h1:bDTs37awreYG5Dn+whJ5OLmwsEXon70nnhCWsr+egu0=
+github.com/Songmu/go-sandbox v0.1.0/go.mod h1:sPatwVCdhieSOa2WWpMgSvlDhBvFaIK00dZyxoZy3k4=
 github.com/blang/semver v3.5.1+incompatible h1:cQNTCjp13qL8KC3Nbxr/y2Bqb63oX6wdnnjpJbkM4JQ=
 github.com/blang/semver v3.5.1+incompatible/go.mod h1:kRBLl5iJ+tD4TcOOxsy/0fnwebNt5EWlYSAyrTnjyyk=
 github.com/fsnotify/fsnotify v1.4.7 h1:IXs+QLmnXW2CcXuY+8Mzv/fWEsPGWxqefPtCP5CnV9I=
