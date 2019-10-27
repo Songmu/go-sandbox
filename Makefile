@@ -1,4 +1,4 @@
-VERSION := $(shell godzil show-version ./cmd/songmu)
+VERSION = $(shell godzil show-version ./cmd/songmu)
 u := $(if $(update),-u)
 
 export GO111MODULE=on
