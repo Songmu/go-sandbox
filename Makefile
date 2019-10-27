@@ -11,17 +11,21 @@ deps:
 .PHONY: devel-deps
 devel-deps:
 	GO111MODULE=off go get $(u) \
-      golang.org/x/ling/golint \
-      github.com/Songmu/godzil/cmd/godzil \
-      github.com/Songmu/goxz/cmd/goxz     \
+      golang.org/x/lint/golint                  \
+      github.com/Songmu/godzil/cmd/godzil       \
+      github.com/Songmu/goxz/cmd/goxz           \
+      github.com/Songmu/gocredits/cmd/gocredits \
       github.com/tcnksm/ghr
 
 .PHONY: bump
 bump: devel-deps
-	godzil release
+	godzil release ./cmd/songmu
+
+CREDITS: deps devel-deps go.sum
+	gocredits -w
 
 .PHONY: crossbuild
-crossbuild:
+crossbuild: CREDITS
 	goxz -pv=v$(VERSION) -d=./dist/v$(VERSION) ./cmd/songmu
 
 .PHONY: upload
