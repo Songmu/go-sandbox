@@ -1,5 +1,8 @@
 name: test
-on: [push]
+on:
+  push:
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+"
 jobs:
   test:
     runs-on: ${{ matrix.os }}
@@ -23,19 +26,27 @@ jobs:
       run: |
         GO111MODULE=off GOBIN=$(pwd)/bin go get golang.org/x/lint/golint
         bin/golint -set_exit_status ./...
-      if: "matrix.os == 'ubuntu-latest' || matrix.os == 'macOS-latest'"
+      if: "!startsWith(github.event.ref, 'refs/tags/') && (matrix.os == 'ubuntu-latest' || matrix.os == 'macOS-latest')"
     - name: test
       run: |
         go test -coverprofile coverage.out ./...
+      if: "!startsWith(github.event.ref, 'refs/tags/')"
     - name: Convert coverage to lcov
       uses: jandelgado/gcov2lcov-action@v1.0.0
       with:
           infile: coverage.out
           outfile: coverage.lcov
-      if: "matrix.os == 'ubuntu-latest'"
+      if: "!startsWith(github.event.ref, 'refs/tags/') && matrix.os == 'ubuntu-latest'"
     - name: Coveralls
       uses: coverallsapp/github-action@master
       with:
         github-token: ${{ secrets.github_token }}
         path-to-lcov: coverage.lcov
-      if: "matrix.os == 'ubuntu-latest'"
+      if: "!startsWith(github.event.ref, 'refs/tags/') && matrix.os == 'ubuntu-latest'"
+    - name: release
+      env:
+        GITHUB_TOKEN: ${{ secrets.github_token }}
+      run: |
+        export GOBIN=$(pwd)/bin
+        PATH=$GOBIN:$PATH make release
+      if: "startsWith(github.event.ref, 'refs/tags/')"
